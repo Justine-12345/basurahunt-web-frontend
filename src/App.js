@@ -106,14 +106,12 @@ function App() {
   },[auth, isAuthenticated])
 
   return (
-    <Router>
+    <Router basename="/basurahunt-web-frontend">
       <div className="App">
       {!auth?
         <GuestHeader/>:<Header/>
       }
         
-        
-
           <Routes>
             {/*AUTH===JUSTINE*/}
             <Route path="/table" element={<Table/>} exact="true"/>
