@@ -93,6 +93,9 @@ export const authReducer = (state = { user:{} }, action) => {
 		case CHECK_OTP_SUCCESS:
 			localStorage.setItem("isAuthenticated", true);
             localStorage.setItem("user", JSON.stringify(action.payload.user));
+            if(action.payload.token){
+                localStorage.setItem("token",action.payload.token)
+            }
 			return{
 				...state,
 				loading: false,

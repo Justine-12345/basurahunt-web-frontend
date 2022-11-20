@@ -270,7 +270,7 @@ const Header = () => {
   const logoutHandler = (e) => {
   		e.preventDefault()
   		dispatch(logout())
-  		localStorage.clear()
+  		// localStorage.clear()
   }
 
 	const userTab = () => {
@@ -604,7 +604,7 @@ const notifIcon = (data) => {
 									</Fragment>:""
 								}
 
-									<a onClick={logoutHandler} className="nav-link">Logout</a>
+									<span onClick={logoutHandler} className="nav-link">Logout</span>
 								</div>
 
 								</Fragment>

@@ -87,7 +87,8 @@ export const login = (email, password) => async (dispatch) => {
             }
         }
 
-        const { data } = await axios.post(`/api/v1/login`, { email, password }, config)
+        const { data } = await axios.post(`${BASE_URL}/api/v1/login`, { email, password }, config)
+       
         dispatch({
             type: LOGIN_SUCCESS,
             payload: data
@@ -168,9 +169,15 @@ export const refreshOtp = () => async (dispatch) => {
 	 try {
 
         dispatch({ type: REFRESH_OTP_REQUEST })
+        
+        const token = localStorage.getItem("token")
+        const config = {
+            headers : {
+                'token' : token
+              }
+        }
 
-
-        const { data } = await axios.put(`${BASE_URL}/api/v1/otp/update`)
+        const { data } = await axios.put(`${BASE_URL}/api/v1/otp/update`, config)
 
         dispatch({
             type: REFRESH_OTP_SUCCESS,
@@ -190,10 +197,11 @@ export const checkOtp = (otp) => async (dispatch) => {
 	 try {
 
         dispatch({ type: CHECK_OTP_REQUEST })
-
+        const token = localStorage.getItem("token")
 		const config = {
             headers: {
-                'Content-Type': 'multipart/form-data'
+                'Content-Type': 'multipart/form-data',
+                'token' : token
             }
         }
 
@@ -216,10 +224,16 @@ export const checkOtp = (otp) => async (dispatch) => {
 // load auth/user
 export const loadUser = () => async (dispatch) => {
     try {
-
+        const token = localStorage.getItem("token")
         dispatch({ type: LOAD_USER_REQUEST })
 
-        const { data } = await axios.get(`${BASE_URL}/api/v1/me`)
+        const config = {
+            headers : {
+                'token' : token
+              }
+        }
+
+        const { data } = await axios.get(`${BASE_URL}/api/v1/me`, config)
 
         dispatch({
             type: LOAD_USER_SUCCESS,
@@ -227,7 +241,7 @@ export const loadUser = () => async (dispatch) => {
         })
 
     } catch (error) {
-        localStorage.clear()
+       
 
         dispatch({
             type: LOAD_USER_FAIL,
@@ -242,9 +256,11 @@ export const updateProfile = (userData) => async (dispatch) => {
 
         dispatch({ type: UPDATE_PROFILE_REQUEST })
 
+        const token = localStorage.getItem("token")
         const config = {
             headers: {
-                'Content-Type': 'multipart/form-data'
+                'Content-Type': 'multipart/form-data',
+                'token' : token
             }
         }
 
@@ -269,10 +285,11 @@ export const updatePassword = (passwords) => async (dispatch) => {
     try {
 
         dispatch({ type: UPDATE_PASSWORD_REQUEST })
-
+        const token = localStorage.getItem("token")
         const config = {
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'token' : token
             }
         }
 
@@ -351,7 +368,14 @@ export const resetPassword = (token, passwords) => async (dispatch) => {
 export const logout = () => async (dispatch) => {
     try {
 
-        await axios.get('/api/v1/logout')
+        const token = localStorage.getItem("token")
+        const config = {
+            headers: {
+                'token' : token
+            }
+        }
+
+        await axios.get(`${BASE_URL}/api/v1/logout`, config)
 
         dispatch({
             type: LOGOUT_SUCCESS,
@@ -370,7 +394,14 @@ export const reportedDumps = () => async (dispatch) => {
     try {
         dispatch({ type: USER_DUMPS_REQUEST })
 
-        const { data } = await axios.get(`${BASE_URL}/api/v1/me/reported-dumps`)
+        const token = localStorage.getItem("token")
+        const config = {
+            headers: {
+                'token' : token
+            }
+        }
+
+        const { data } = await axios.get(`${BASE_URL}/api/v1/me/reported-dumps`, config)
       
         dispatch({
             type: USER_DUMPS_SUCCESS,
@@ -390,7 +421,14 @@ export const receiveItems = () => async (dispatch) => {
     try {
         dispatch({ type: USER_RECEIVE_REQUEST })
 
-        const { data } = await axios.get(`${BASE_URL}/api/v1/me/receive-items`)
+        const token = localStorage.getItem("token")
+        const config = {
+            headers: {
+                'token' : token
+            }
+        }
+
+        const { data } = await axios.get(`${BASE_URL}/api/v1/me/receive-items`, config)
         
         dispatch({
             type: USER_RECEIVE_SUCCESS,
@@ -409,7 +447,14 @@ export const donatedItems = () => async (dispatch) => {
     try {
         dispatch({ type: USER_DONATED_REQUEST })
 
-        const { data } = await axios.get(`${BASE_URL}/api/v1/me/donated-items`)
+        const token = localStorage.getItem("token")
+        const config = {
+            headers: {
+                'token' : token
+            }
+        }
+
+        const { data } = await axios.get(`${BASE_URL}/api/v1/me/donated-items`, config)
 
         dispatch({
             type: USER_DONATED_SUCCESS,
@@ -428,7 +473,14 @@ export const claimedItems = () => async (dispatch) => {
     try {
         dispatch({ type: USER_CLAIMED_REQUEST })
 
-        const { data } = await axios.get(`${BASE_URL}/api/v1/me/claimed-items`)
+        const token = localStorage.getItem("token")
+        const config = {
+            headers: {
+                'token' : token
+            }
+        }
+
+        const { data } = await axios.get(`${BASE_URL}/api/v1/me/claimed-items`, config)
 
         dispatch({
             type: USER_CLAIMED_SUCCESS,
@@ -450,7 +502,14 @@ export const allUsers = () => async (dispatch) => {
     try {
         dispatch({ type: ALL_USERS_REQUEST })
 
-        const { data } = await axios.get(`${BASE_URL}/api/v1/admin/users`)
+        const token = localStorage.getItem("token")
+        const config = {
+            headers: {
+                'token' : token
+            }
+        }
+
+        const { data } = await axios.get(`${BASE_URL}/api/v1/admin/users`, config)
 
         dispatch({
             type: ALL_USERS_SUCCESS,
@@ -471,10 +530,11 @@ export const updateUser = (id, userData) => async (dispatch) => {
     try {
 
         dispatch({ type: UPDATE_USER_REQUEST })
-
+        const token = localStorage.getItem("token")
         const config = {
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'token': token
             }
         }
 
@@ -499,8 +559,13 @@ export const getUserDetails = (id) => async (dispatch) => {
 
         dispatch({ type: USER_DETAILS_REQUEST })
 
-
-        const { data } = await axios.get(`${BASE_URL}/api/v1/admin/user/${id}`)
+        const token = localStorage.getItem("token")
+        const config = {
+            headers: {
+                'token' : token
+            }
+        }
+        const { data } = await axios.get(`${BASE_URL}/api/v1/admin/user/${id}`, config)
 
         dispatch({
             type: USER_DETAILS_SUCCESS,
@@ -520,8 +585,13 @@ export const deleteUser = (id) => async (dispatch) => {
     try {
 
         dispatch({ type: DELETE_USER_REQUEST })
-
-        const { data } = await axios.delete(`${BASE_URL}/api/v1/admin/user/${id}`)
+        const token = localStorage.getItem("token")
+        const config = {
+            headers: {
+                'token' : token
+            }
+        }
+        const { data } = await axios.delete(`${BASE_URL}/api/v1/admin/user/${id}`, config)
 
         dispatch({
             type: DELETE_USER_SUCCESS,
@@ -544,10 +614,11 @@ export const readNofication = (notifCode) => async (dispatch) => {
 
 
         dispatch({ type: READ_NOTIFICATION_REQUEST })
-
+        const token = localStorage.getItem("token")
         const config = {
             headers: {
-                'Content-Type': 'multipart/form-data'
+                'Content-Type': 'multipart/form-data',
+                'token' : token
             }
         }
 
@@ -574,8 +645,13 @@ export const getLevelExp = () => async (dispatch) => {
 
         dispatch({ type: GET_LEVEL_EXP_REQUEST })
 
-
-        const { data } = await axios.get(`${BASE_URL}/api/v1/me/level-exp`)
+        const token = localStorage.getItem("token")
+        const config = {
+            headers: {
+                'token' : token
+            }
+        }
+        const { data } = await axios.get(`${BASE_URL}/api/v1/me/level-exp`, config)
 
         dispatch({
             type: GET_LEVEL_EXP_SUCCESS,

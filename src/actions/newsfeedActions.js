@@ -30,15 +30,23 @@ import {
 
 import { BASE_URL } from '../constants/baseURL';
 
+
 export const getNewsfeedList = (currentPage=1) => async (dispatch) => {
     try {
         dispatch({
             type: NEWSFEED_LIST_REQUEST
         })
 
+        const token = localStorage.getItem("token")
+        const config = {
+            headers : {
+                'token' : token
+              }
+        }
+
         let link = `${BASE_URL}/api/v1/newsfeeds?page=${currentPage}`
         
-        const {data} = await axios.get(link);
+        const {data} = await axios.get(link, token);
         
         dispatch({
             type: NEWSFEED_LIST_SUCCESS,
@@ -73,7 +81,14 @@ export const getNewsfeeds = () => async (dispatch) => {
 
         dispatch({ type: ALL_NEWSFEEDS_REQUEST })
 
-        const { data } = await axios.get(`${BASE_URL}/api/v1/admin/newsfeeds`)
+        const token = localStorage.getItem("token")
+        const config = {
+            headers : {
+                'token' : token
+              }
+        }
+
+        const { data } = await axios.get(`${BASE_URL}/api/v1/admin/newsfeeds`,config)
 
         dispatch({
             type: ALL_NEWSFEEDS_SUCCESS,
