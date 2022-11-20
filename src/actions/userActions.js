@@ -72,6 +72,7 @@ import {
 		CLEAR_ERRORS
 	}  from '../constants/userConstants'
 
+import { BASE_URL } from '../constants/baseURL'
 
 
 // Login
@@ -86,7 +87,7 @@ export const login = (email, password) => async (dispatch) => {
             }
         }
 
-        const { data } = await axios.post('/api/v1/login', { email, password }, config)
+        const { data } = await axios.post(`/api/v1/login`, { email, password }, config)
         dispatch({
             type: LOGIN_SUCCESS,
             payload: data
@@ -115,7 +116,7 @@ export const register = (userData) => async (dispatch) => {
         }
 
 
-        const { data } = await axios.post('/api/v1/register', userData, config)
+        const { data } = await axios.post(`${BASE_URL}/api/v1/register`, userData, config)
 
         dispatch({
             type: REGISTER_USER_SUCCESS,
@@ -144,7 +145,7 @@ export const findEmail = (email) => async (dispatch) => {
             }
         }
 
-        const { data } = await axios.post('/api/v1/findEmail', {email}, config)
+        const { data } = await axios.post(`${BASE_URL}/api/v1/findEmail`, {email}, config)
 
       
 
@@ -169,7 +170,7 @@ export const refreshOtp = () => async (dispatch) => {
         dispatch({ type: REFRESH_OTP_REQUEST })
 
 
-        const { data } = await axios.put('/api/v1/otp/update')
+        const { data } = await axios.put(`${BASE_URL}/api/v1/otp/update`)
 
         dispatch({
             type: REFRESH_OTP_SUCCESS,
@@ -196,7 +197,7 @@ export const checkOtp = (otp) => async (dispatch) => {
             }
         }
 
-        const { data } = await axios.put('/api/v1/otp/check/', otp, config)
+        const { data } = await axios.put(`${BASE_URL}/api/v1/otp/check/`, otp, config)
 
         console.log(data)
 
@@ -218,7 +219,7 @@ export const loadUser = () => async (dispatch) => {
 
         dispatch({ type: LOAD_USER_REQUEST })
 
-        const { data } = await axios.get('/api/v1/me')
+        const { data } = await axios.get(`${BASE_URL}/api/v1/me`)
 
         dispatch({
             type: LOAD_USER_SUCCESS,
@@ -247,7 +248,7 @@ export const updateProfile = (userData) => async (dispatch) => {
             }
         }
 
-        const { data } = await axios.put('/api/v1/me/update', userData, config)
+        const { data } = await axios.put(`${BASE_URL}/api/v1/me/update`, userData, config)
 
         dispatch({
             type: UPDATE_PROFILE_SUCCESS,
@@ -275,7 +276,7 @@ export const updatePassword = (passwords) => async (dispatch) => {
             }
         }
 
-        const { data } = await axios.put('/api/v1/password/update', passwords, config)
+        const { data } = await axios.put(`${BASE_URL}/api/v1/password/update`, passwords, config)
 
         dispatch({
             type: UPDATE_PASSWORD_SUCCESS,
@@ -303,7 +304,7 @@ export const forgotPassword = (email) => async (dispatch) => {
             }
         }
 
-        const { data } = await axios.post('/api/v1/password/forgot', email, config)
+        const { data } = await axios.post(`${BASE_URL}/api/v1/password/forgot`, email, config)
 
         dispatch({
             type: FORGOT_PASSWORD_SUCCESS,
@@ -331,7 +332,7 @@ export const resetPassword = (token, passwords) => async (dispatch) => {
             }
         }
 
-        const { data } = await axios.put(`/api/v1/password/reset/${token}`, passwords, config)
+        const { data } = await axios.put(`${BASE_URL}/api/v1/password/reset/${token}`, passwords, config)
 
         dispatch({
             type: NEW_PASSWORD_SUCCESS,
@@ -369,7 +370,7 @@ export const reportedDumps = () => async (dispatch) => {
     try {
         dispatch({ type: USER_DUMPS_REQUEST })
 
-        const { data } = await axios.get('/api/v1/me/reported-dumps')
+        const { data } = await axios.get(`${BASE_URL}/api/v1/me/reported-dumps`)
       
         dispatch({
             type: USER_DUMPS_SUCCESS,
@@ -389,7 +390,7 @@ export const receiveItems = () => async (dispatch) => {
     try {
         dispatch({ type: USER_RECEIVE_REQUEST })
 
-        const { data } = await axios.get('/api/v1/me/receive-items')
+        const { data } = await axios.get(`${BASE_URL}/api/v1/me/receive-items`)
         
         dispatch({
             type: USER_RECEIVE_SUCCESS,
@@ -408,7 +409,7 @@ export const donatedItems = () => async (dispatch) => {
     try {
         dispatch({ type: USER_DONATED_REQUEST })
 
-        const { data } = await axios.get('/api/v1/me/donated-items')
+        const { data } = await axios.get(`${BASE_URL}/api/v1/me/donated-items`)
 
         dispatch({
             type: USER_DONATED_SUCCESS,
@@ -427,7 +428,7 @@ export const claimedItems = () => async (dispatch) => {
     try {
         dispatch({ type: USER_CLAIMED_REQUEST })
 
-        const { data } = await axios.get('/api/v1/me/claimed-items')
+        const { data } = await axios.get(`${BASE_URL}/api/v1/me/claimed-items`)
 
         dispatch({
             type: USER_CLAIMED_SUCCESS,
@@ -449,7 +450,7 @@ export const allUsers = () => async (dispatch) => {
     try {
         dispatch({ type: ALL_USERS_REQUEST })
 
-        const { data } = await axios.get('/api/v1/admin/users')
+        const { data } = await axios.get(`${BASE_URL}/api/v1/admin/users`)
 
         dispatch({
             type: ALL_USERS_SUCCESS,
@@ -477,7 +478,7 @@ export const updateUser = (id, userData) => async (dispatch) => {
             }
         }
 
-        const { data } = await axios.put(`/api/v1/admin/user/${id}`, userData, config)
+        const { data } = await axios.put(`${BASE_URL}/api/v1/admin/user/${id}`, userData, config)
 
         dispatch({
             type: UPDATE_USER_SUCCESS,
@@ -499,7 +500,7 @@ export const getUserDetails = (id) => async (dispatch) => {
         dispatch({ type: USER_DETAILS_REQUEST })
 
 
-        const { data } = await axios.get(`/api/v1/admin/user/${id}`)
+        const { data } = await axios.get(`${BASE_URL}/api/v1/admin/user/${id}`)
 
         dispatch({
             type: USER_DETAILS_SUCCESS,
@@ -520,7 +521,7 @@ export const deleteUser = (id) => async (dispatch) => {
 
         dispatch({ type: DELETE_USER_REQUEST })
 
-        const { data } = await axios.delete(`/api/v1/admin/user/${id}`)
+        const { data } = await axios.delete(`${BASE_URL}/api/v1/admin/user/${id}`)
 
         dispatch({
             type: DELETE_USER_SUCCESS,
@@ -550,7 +551,7 @@ export const readNofication = (notifCode) => async (dispatch) => {
             }
         }
 
-        const { data } = await axios.put('/api/v1/me/read-notification', notifCode, config)
+        const { data } = await axios.put(`${BASE_URL}/api/v1/me/read-notification`, notifCode, config)
 
 
         dispatch({
@@ -574,7 +575,7 @@ export const getLevelExp = () => async (dispatch) => {
         dispatch({ type: GET_LEVEL_EXP_REQUEST })
 
 
-        const { data } = await axios.get(`/api/v1/me/level-exp`)
+        const { data } = await axios.get(`${BASE_URL}/api/v1/me/level-exp`)
 
         dispatch({
             type: GET_LEVEL_EXP_SUCCESS,

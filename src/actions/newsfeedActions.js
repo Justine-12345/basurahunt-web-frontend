@@ -28,13 +28,15 @@ import {
     CLEAR_ERRORS 
 } from '../constants/newsfeedConstants';
 
+import { BASE_URL } from '../constants/baseURL';
+
 export const getNewsfeedList = (currentPage=1) => async (dispatch) => {
     try {
         dispatch({
             type: NEWSFEED_LIST_REQUEST
         })
 
-        let link = `/api/v1/newsfeeds?page=${currentPage}`
+        let link = `${BASE_URL}/api/v1/newsfeeds?page=${currentPage}`
         
         const {data} = await axios.get(link);
         
@@ -53,7 +55,7 @@ export const getNewsfeedList = (currentPage=1) => async (dispatch) => {
 export const getNewsfeedDetails = (id) => async (dispatch) => {
     try {
         dispatch({ type: NEWSFEED_DETAILS_REQUEST })
-        const { data } = await axios.get(`/api/v1/newsfeed/${id}`)
+        const { data } = await axios.get(`${BASE_URL}/api/v1/newsfeed/${id}`)
         dispatch({
             type: NEWSFEED_DETAILS_SUCCESS,
             payload: data
@@ -71,7 +73,7 @@ export const getNewsfeeds = () => async (dispatch) => {
 
         dispatch({ type: ALL_NEWSFEEDS_REQUEST })
 
-        const { data } = await axios.get(`/api/v1/admin/newsfeeds`)
+        const { data } = await axios.get(`${BASE_URL}/api/v1/admin/newsfeeds`)
 
         dispatch({
             type: ALL_NEWSFEEDS_SUCCESS,
@@ -98,7 +100,7 @@ export const newNewsfeed = (newsfeedData) => async (dispatch) => {
             }
         }
 
-        const { data } = await axios.post(`/api/v1/admin/newsfeed/new`, newsfeedData, config)
+        const { data } = await axios.post(`${BASE_URL}/api/v1/admin/newsfeed/new`, newsfeedData, config)
 
         dispatch({
             type: NEW_NEWSFEED_SUCCESS,
@@ -124,7 +126,7 @@ export const updateNewsfeed = (id, newsfeedData) => async (dispatch) => {
             }
         }
 
-        const { data } = await axios.put(`/api/v1/admin/newsfeed/${id}`, newsfeedData, config)
+        const { data } = await axios.put(`${BASE_URL}/api/v1/admin/newsfeed/${id}`, newsfeedData, config)
 
         dispatch({
             type: UPDATE_NEWSFEED_SUCCESS,
@@ -144,7 +146,7 @@ export const deleteNewsfeed = (id) => async (dispatch) => {
 
         dispatch({ type: DELETE_NEWSFEED_REQUEST })
 
-        const { data } = await axios.delete(`/api/v1/admin/newsfeed/${id}`)
+        const { data } = await axios.delete(`${BASE_URL}/api/v1/admin/newsfeed/${id}`)
 
         dispatch({
             type: DELETE_NEWSFEED_SUCCESS,
