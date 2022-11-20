@@ -106,7 +106,7 @@ function App() {
   },[auth, isAuthenticated])
 
   return (
-    <Router basename="/basurahunt-web-frontend">
+    <Router basename="/basurahunt">
       <div className="App">
       {!auth?
         <GuestHeader/>:<Header/>
